@@ -154,6 +154,9 @@ return [
         SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
         Intervention\Image\ImageServiceProviderLaravel5::class,
 
+        //dev
+        Barryvdh\Debugbar\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -208,6 +211,9 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+
+        //dev
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
