@@ -1,9 +1,4 @@
 /vendor
 /node_modules
-/public/storage
-/public/packages
-Homestead.yaml
-Homestead.json
-_ide_helper.php
 .phpstorm.meta.php
 .idea

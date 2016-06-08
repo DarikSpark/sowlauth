@@ -41,10 +41,11 @@
             "php artisan key:generate"
         ],
         "post-install-cmd": [
+            "php artisan clear-compiled",
+            "php artisan ide-helper:generate",
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize",
-            "php artisan sleepingowl:install",
-            "php artisan ide-helper:generate"
+            "php artisan sleepingowl:install"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",

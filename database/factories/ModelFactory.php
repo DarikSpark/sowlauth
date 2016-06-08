@@ -57,6 +57,37 @@ $factory->define(App\Model\Country::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Model\Client::class, function (Faker\Generator $faker) {
+    $faker = Faker\Factory::create('ru_RU');
+    // $fakerEn = Faker\Factory::create();
+
+    $carier = array(
+            'Директор',
+            'Менеджер по закупкам',
+            'Акционер',
+            'Флорист',
+        );
+
+    return [        
+        'statusClient' => $faker->numberBetween($min = 1, $max = 5),
+        'lastName' => $faker->lastName,
+        'secondName' => $faker->middleNameMale,
+        'firstName' => $faker->firstNameMale,
+        'sex' => $faker->numberBetween($min = 0, $max = 1),
+        'company' => $faker->company,
+        'carier' => $carier[$faker->numberBetween($min = 0, $max = 3)],
+        'telephone' => $faker->phoneNumber,
+        'email' => $faker->email,
+        'city' => $faker->city,
+        'web' => $faker->freeEmailDomain,
+        'skype' => $faker->userName,
+        'address' => $faker->streetAddress,
+        'verificity' => $faker->numberBetween($min = 0, $max = 1),
+        'active' => $faker->numberBetween($min = 0, $max = 1),
+        'birthday' => $faker->date($format = 'Y-m-d', $max = '-18 years'),
+    ];
+});
+
 $factory->define(App\Model\Form::class, function (Faker\Generator $faker) {
     return [
         'title'     => $faker->sentence(4),
