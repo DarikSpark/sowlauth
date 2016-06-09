@@ -4,7 +4,7 @@ use App\Model\News3;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(News3::class, function (ModelConfiguration $model) {
-    $model->setTitle('News v3')->setAlias('news/v3');
+    $model->setTitle('Новости v3')->setAlias('news/v3');
 
     // Display
     $model->onDisplay(function () {

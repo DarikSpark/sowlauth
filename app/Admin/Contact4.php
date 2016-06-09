@@ -5,7 +5,7 @@ use App\Model\Contact4;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Contact4::class, function (ModelConfiguration $model) {
-    $model->setTitle('Contacts v.4')->setAlias('contacts4');
+    $model->setTitle('Контакты v.4')->setAlias('contacts4');
 
     // Display
     $model->onDisplay(function () {

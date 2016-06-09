@@ -4,7 +4,7 @@ use App\Model\Company;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Company::class, function (ModelConfiguration $model) {
-    $model->setTitle('Companies');
+    $model->setTitle('Компании');
 
     // Display
     $model->onDisplay(function () {

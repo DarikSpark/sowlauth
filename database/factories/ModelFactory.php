@@ -88,6 +88,41 @@ $factory->define(App\Model\Client::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Model\Bouquet::class, function (Faker\Generator $faker) {
+    // $faker = Faker\Factory::create();
+    // $fakerEn = Faker\Factory::create();
+
+    $description = array(
+            'Наиболее популярный букет из 101 розы длинной 50 см и диаметром 5 см',
+            'Букет из 51 розы длинной 40 см и диаметром 4 см',
+            'Прекрасный букет к 8 марта из 101 розы в красивом оформлении',
+            'Отличный подарок любимой женщине. 51 роза красного и белого цвета длиной 60 см',
+        );
+
+    return [
+        'name' => $faker->unique()->firstNameFemale,
+        'description' => $description[$faker->numberBetween($min=0, $max=3)],
+        'image' => $faker->imageUrl($width = 400, $height = 400, $category = 'abstract'),
+        'price' => $faker->numberBetween($min = 1500, $max = 5000),
+        'active' => $faker->numberBetween($min = 0, $max = 1),
+    ];
+});
+
+$factory->define(App\Model\Sort::class, function (Faker\Generator $faker) {
+    // $faker = Faker\Factory::create('ru_RU');
+    // $fakerEn = Faker\Factory::create();
+    $length = $faker->randomElement([30, 40, 50, 60, 70, 80, 90]);
+
+    return [        
+        'sort' => $faker->unique()->firstNameFemale.' '.$length,
+        'plantation' => $faker->city,
+        'length' => $length,
+        'weight' => $faker->numberBetween($min = 30, $max = 50),
+        'cost' => $faker->numberBetween($min = 5, $max = 50),
+    ];
+}); 
+
+
 $factory->define(App\Model\Form::class, function (Faker\Generator $faker) {
     return [
         'title'     => $faker->sentence(4),

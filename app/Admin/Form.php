@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Form::class, function (ModelConfiguration $model) {
 
-    $model->setTitle('Form Items');
+    $model->setTitle('Элементы форм');
 
     // Display
     $model->onDisplay(function () {
@@ -64,4 +64,5 @@ AdminSection::registerModel(Form::class, function (ModelConfiguration $model) {
         return $form;
     });
 })
-    ->addMenuPage(Form::class, 100);
+    ->addMenuPage(Form::class, 100)
+    ->setIcon('fa fa-bank');

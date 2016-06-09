@@ -5,7 +5,7 @@ use App\User;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
-    $model->setTitle('Users')->enableAccessCheck();
+    $model->setTitle('Пользователи')->enableAccessCheck();
 
     // Display
     $model->onDisplay(function () {

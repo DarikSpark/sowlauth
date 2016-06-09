@@ -5,7 +5,7 @@ use App\Model\Country;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Contact::class, function (ModelConfiguration $model) {
-    $model->setTitle('Contacts')->enableAccessCheck();
+    $model->setTitle('Контакты')->enableAccessCheck();
 
     // AdminNavigation::setAccessLogic(function(Page $page) {
     //     return false;

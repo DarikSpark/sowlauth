@@ -7,7 +7,7 @@ use App\Model\Contact3;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Contact3::class, function (ModelConfiguration $model) {
-    $model->setTitle('Contacts v.3')->setAlias('contacts/v3');
+    $model->setTitle('Контакты v.3')->setAlias('contacts/v3');
 
     // Display
     $model->onDisplay(function () {

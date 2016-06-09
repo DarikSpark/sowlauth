@@ -5,7 +5,7 @@ use App\Model\Country;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Country::class, function (ModelConfiguration $model) {
-    $model->setTitle('Countries (orderable)');
+    $model->setTitle('Страны (упорядочивание)');
 
     $model->onDisplay(function() {
         $display = AdminDisplay::table();

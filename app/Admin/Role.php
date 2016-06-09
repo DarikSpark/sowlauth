@@ -4,7 +4,7 @@ use App\Role;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Role::class, function (ModelConfiguration $model) {
-    $model->setTitle('Roles')->enableAccessCheck();
+    $model->setTitle('Роли')->enableAccessCheck();
 
     // Display
     $model->onDisplay(function () {

@@ -4,7 +4,7 @@ use SleepingOwl\Admin\Navigation\Page;
 
 return [
     [
-        'title' => "Contacts",
+        'title' => "Контакты",
         'icon' => 'fa fa-credit-card',
         'pages' => [
             (new Page(\App\Model\Contact::class))
@@ -22,7 +22,7 @@ return [
         ]
     ],
     [
-        'title' => "Content",
+        'title' => "Контент",
         'icon' => 'fa fa-newspaper-o',
         'pages' => [
             (new Page(\App\Model\News::class))
@@ -43,7 +43,7 @@ return [
         ]
     ],
     [
-        'title' => 'Permissions',
+        'title' => 'Допуски',
         'icon' => 'fa fa-group',
         'pages' => [
             (new Page(\App\User::class))

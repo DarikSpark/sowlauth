@@ -4,6 +4,8 @@ use App\Model\Post;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(Post::class, function (ModelConfiguration $model) {
+    $model->setTitle('Посты');
+
     // Display
     $model->onDisplay(function () {
         return AdminDisplay::table()->setColumns([
@@ -18,4 +20,5 @@ AdminSection::registerModel(Post::class, function (ModelConfiguration $model) {
             AdminFormElement::wysiwyg('text', 'Text', 'simplemde')->required()->setFilteredValueToField('text_html'),
         ]);
     });
-})->addMenuPage(Post::class);
+})->addMenuPage(Post::class)
+->setIcon('fa fa-bank');
