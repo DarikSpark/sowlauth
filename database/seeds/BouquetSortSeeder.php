@@ -37,7 +37,7 @@ class BouquetSortSeeder extends Seeder
         	try {
                 $count = $faker->numberBetween($min = 1, $max = 51);
                 $bouquet = $bouquets->random();
-        		$bouquet->sorts()->attach($sorts->random());
+        		$bouquet->sorts()->attach($sorts->random(), ['count' => $count]);
                 $count = $bouquet->count + $count;
                 $bouquet->count = $count;
                 $bouquet->save();

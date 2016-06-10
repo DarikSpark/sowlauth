@@ -23,6 +23,11 @@ class Bouquet extends Model
         return $this->belongsToMany(Sort::class, 'bouquet_sort', 'bouquet_id');
     }
 
+    public function purchases()
+    {
+        return $this->belongsToMany('App\Model\Purchases', 'bouquet_purchase', 'bouquet_id');
+    }
+
     // public function contacts()
     // {
     //     return $this->hasMany(Contact::class);

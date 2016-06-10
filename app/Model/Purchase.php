@@ -27,6 +27,11 @@ class Purchase extends Model
         return $this->belongsTo('App\Model\Client');
     }
 
+    public function bouquets()
+    {
+        return $this->belongsToMany('App\Model\Bouquet', 'bouquet_purchase', 'purchase_id');
+    }
+
     // public function contacts()
     // {
     //     return $this->hasMany(Contact::class);
