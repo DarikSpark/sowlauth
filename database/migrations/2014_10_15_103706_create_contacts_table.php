@@ -21,7 +21,9 @@ class CreateContactsTable extends Migration
             $table->date('birthday');
             $table->string('phone');
             $table->string('address');
+            $table->integer('height')->unsigned()->nullable();
             $table->integer('country_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             //$table->foreign('country_id')->references('id')->on('countries');
             $table->text('comment');
             $table->timestamps();

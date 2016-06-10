@@ -2,6 +2,7 @@
 
 use App\Model\Bouquet;
 use App\Model\Sort;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class BouquetSortSeeder extends Seeder
@@ -17,10 +18,16 @@ class BouquetSortSeeder extends Seeder
 
         $bouquets = Bouquet::all();
         $sorts = Sort::all();
+        $faker = Factory::create();
 
         foreach ($bouquets as $bouquet) {
             try {
-                $bouquet->sorts()->attach($sorts->random());
+                $count = $faker->numberBetween($min = 1, $max = 51);
+                $bouquet->sorts()->attach($sorts->random(), ['count' => $count]);
+                
+                // $count = $bouquet->count + $count;
+                $bouquet->count = $count;
+                $bouquet->save();
             } catch (\Exception $e) {
                 
             }
@@ -28,7 +35,13 @@ class BouquetSortSeeder extends Seeder
 
         for ($i=0; $i < 100; $i++) { 
         	try {
-        		$bouquets->random()->sorts()->attach($sorts->random());
+                $count = $faker->numberBetween($min = 1, $max = 51);
+                $bouquet = $bouquets->random();
+        		$bouquet->sorts()->attach($sorts->random());
+                $count = $bouquet->count + $count;
+                $bouquet->count = $count;
+                $bouquet->save();
+
         	} catch (\Exception $e) {
         		
         	}

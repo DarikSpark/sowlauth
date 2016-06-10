@@ -14,6 +14,11 @@ class Client extends Model
         'updated_at'
     ];
 
+    public function purhases()
+    {
+        return $this->hasMany('App\Model\Purchase');
+    }
+
     // public function contacts()
     // {
     //     return $this->hasMany(Contact::class);

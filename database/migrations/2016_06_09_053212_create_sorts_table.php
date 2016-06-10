@@ -18,7 +18,8 @@ class CreateSortsTable extends Migration
             $table->string('plantation')->nullable();
             $table->string('length')->nullable();
             $table->string('weight')->nullable();
-            $table->string('cost')->nullable();            
+            $table->string('cost')->nullable();
+            $table->string('active')->default('1');            
             $table->timestamps();
         });
     }

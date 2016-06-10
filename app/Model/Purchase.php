@@ -2,11 +2,11 @@
 
 namespace App\Model;
 
-use App\Model\Sort;
+// use App\Model\Sort;
 use Illuminate\Database\Eloquent\Model;
 // use SleepingOwl\Admin\Traits\OrderableModel;
 
-class Bouquet extends Model
+class Purchase extends Model
 {
     // use OrderableModel;
 
@@ -19,8 +19,12 @@ class Bouquet extends Model
 
     // protected $touches = ['bouquet_sort'];
 
-    public function sorts(){
-        return $this->belongsToMany(Sort::class, 'bouquet_sort', 'bouquet_id');
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function client(){
+        return $this->belongsTo('App\Model\Client');
     }
 
     // public function contacts()

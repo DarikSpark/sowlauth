@@ -16,6 +16,7 @@ class CreateBouquetsTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
+            $table->string('count')->default('51');
             $table->string('image')->nullable();
             $table->string('price')->nullable();
             $table->string('active')->default('1');

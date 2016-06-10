@@ -109,4 +109,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Contact::class, 'contact_id');
     }
+
+    public function purhases()
+    {
+        return $this->hasMany('App\Model\Purchase');
+    }
 }

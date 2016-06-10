@@ -12,9 +12,19 @@
 */
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
+    $faker = Faker\Factory::create('ru_RU');
+    $lastName = $faker->lastName;
+    $secondName = $faker->middleNameMale;
+    $firstName = $faker->firstNameMale;
+
     return [
-        'name'           => $faker->name,
+        'name' => $faker->unique()->userName,
+        'fullName' => $lastName.' '.$firstName.' '.$secondName,
+        'lastName' => $lastName,
+        'secondName' => $secondName,
+        'firstName' => $firstName,
         'email'          => $faker->safeEmail,
+                    'telephone'    => $faker->phoneNumber, 
         'password'       => str_random(10),
         'remember_token' => str_random(10),
     ];
@@ -68,11 +78,16 @@ $factory->define(App\Model\Client::class, function (Faker\Generator $faker) {
             'Флорист',
         );
 
+    $lastName = $faker->lastName;
+    $secondName = $faker->middleNameMale;
+    $firstName = $faker->firstNameMale;
+
     return [        
         'statusClient' => $faker->numberBetween($min = 1, $max = 5),
-        'lastName' => $faker->lastName,
-        'secondName' => $faker->middleNameMale,
-        'firstName' => $faker->firstNameMale,
+        'fullName' => $lastName.' '.$firstName.' '.$secondName,
+        'lastName' => $lastName,
+        'secondName' => $secondName,
+        'firstName' => $firstName,
         'sex' => $faker->numberBetween($min = 0, $max = 1),
         'company' => $faker->company,
         'carier' => $carier[$faker->numberBetween($min = 0, $max = 3)],
@@ -102,7 +117,8 @@ $factory->define(App\Model\Bouquet::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->unique()->firstNameFemale,
         'description' => $description[$faker->numberBetween($min=0, $max=3)],
-        'image' => $faker->imageUrl($width = 400, $height = 400, $category = 'abstract'),
+        'image' => $faker->imageUrl($width = 100, $height = 100, $category = 'abstract'),
+        'price' => $faker->numberBetween($min = 11, $max = 201),
         'price' => $faker->numberBetween($min = 1500, $max = 5000),
         'active' => $faker->numberBetween($min = 0, $max = 1),
     ];
@@ -119,8 +135,28 @@ $factory->define(App\Model\Sort::class, function (Faker\Generator $faker) {
         'length' => $length,
         'weight' => $faker->numberBetween($min = 30, $max = 50),
         'cost' => $faker->numberBetween($min = 5, $max = 50),
+        'active' => $faker->numberBetween($min = 0, $max = 1),
     ];
 }); 
+
+// $factory->define(App\Model\Purchase::class, function (Faker\Generator $faker) {
+//     // $faker = Faker\Factory::create('ru_RU');
+//     // $fakerEn = Faker\Factory::create();
+//     $length = $faker->randomElement([30, 40, 50, 60, 70, 80, 90]);
+
+//     return [        
+//         'user_id' => $faker->unique()->firstNameFemale.' '.$length,
+//         'client_id' => $faker->city,
+//         'city_id' => $length,
+//         'status_bargain' => $faker->numberBetween($min = 30, $max = 50),
+//         'gpslong' => $faker->numberBetween($min = 5, $max = 50),
+//         'gpslat' => $faker->numberBetween($min = 0, $max = 1),
+//         'address' => $faker->numberBetween($min = 30, $max = 50),
+//         'note' => $faker->numberBetween($min = 5, $max = 50),
+//         'delivery_date' => $faker->numberBetween($min = 0, $max = 1),
+
+//     ];
+// }); 
 
 
 $factory->define(App\Model\Form::class, function (Faker\Generator $faker) {

@@ -25,12 +25,13 @@ AdminSection::registerModel(Bouquet::class, function (ModelConfiguration $model)
             AdminColumn::text('description')->setLabel('Описание')->setHtmlAttribute('class', 'text-muted'),
             AdminColumn::text('price')->setLabel('Цена')->setHtmlAttribute('class', 'text-muted'),
             AdminColumn::text('active')->setLabel('Active')->setHtmlAttribute('class', 'text-muted'),
+            AdminColumn::text('count')->setLabel('Количество')->setHtmlAttribute('class', 'text-muted'),
             AdminColumn::lists('sorts.sort')->setLabel('Сорта'),
             
         ]);
 
         // $display->setOrder([[1, 'asc']]);
-        $display->paginate(15);
+        $display->paginate(10);
 
         return $display;
     });
