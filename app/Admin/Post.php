@@ -20,5 +20,6 @@ AdminSection::registerModel(Post::class, function (ModelConfiguration $model) {
             AdminFormElement::wysiwyg('text', 'Text', 'simplemde')->required()->setFilteredValueToField('text_html'),
         ]);
     });
-})->addMenuPage(Post::class)
-->setIcon('fa fa-bank');
+});
+// ->addMenuPage(Post::class)
+// ->setIcon('fa fa-bank');

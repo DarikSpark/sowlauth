@@ -30,4 +30,4 @@ AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
             AdminColumn::image('avatar')->setWidth('150px'),
         ]);
     });
-});
+})->addMenuPage(User::class)->setIcon('fa fa-user');

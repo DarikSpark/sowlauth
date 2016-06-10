@@ -18,4 +18,5 @@ AdminSection::registerModel(Page::class, function (ModelConfiguration $model) {
             AdminFormElement::ckeditor('text', 'Text')
         ]);
     });
-})->addMenuPage(Page::class)->setIcon('fa fa-sitemap');
+});
+// ->addMenuPage(Page::class)->setIcon('fa fa-sitemap');

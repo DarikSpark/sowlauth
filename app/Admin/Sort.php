@@ -46,5 +46,5 @@ AdminSection::registerModel(Sort::class, function (ModelConfiguration $model) {
         return $form;
     });
 })
-    ->addMenuPage(Sort::class, 0)
+    ->addMenuPage(Sort::class, 10)
     ->setIcon('fa fa-bank');

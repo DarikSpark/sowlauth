@@ -28,6 +28,7 @@ AdminSection::registerModel(Company::class, function (ModelConfiguration $model)
 
         return $form;
     });
-})
-    ->addMenuPage(Company::class, 0)
-    ->setIcon('fa fa-bank');
+});
+    // ->addMenuPage(Company::class, 0)
+    // ->setIcon('fa fa-bank')
+// ;

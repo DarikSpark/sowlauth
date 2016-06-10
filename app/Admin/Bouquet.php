@@ -52,5 +52,5 @@ AdminSection::registerModel(Bouquet::class, function (ModelConfiguration $model)
         return $form;
     });
 })
-    ->addMenuPage(Bouquet::class, 0)
+    ->addMenuPage(Bouquet::class, 10)
     ->setIcon('fa fa-bank');

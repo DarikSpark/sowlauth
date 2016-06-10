@@ -63,6 +63,6 @@ AdminSection::registerModel(Form::class, function (ModelConfiguration $model) {
 
         return $form;
     });
-})
-    ->addMenuPage(Form::class, 100)
-    ->setIcon('fa fa-bank');
+});
+    // ->addMenuPage(Form::class, 100)
+    // ->setIcon('fa fa-bank');
