@@ -228,7 +228,10 @@ function precise_round(num, decimals) {
         bestAlpha = 0.1,
         bestBeta = 0.1,
         bestGamma = 0.1,
-        bestAvgErr = 0;
+        bestAvgErr = 0,
+        year = 2007,
+        month = 0,
+        week = 0;
 
         var prediction = new Array;
         var bestPrediction = new Array;
@@ -308,9 +311,30 @@ function precise_round(num, decimals) {
       data.addColumn('number', 'Продолжение реального ряда');
 
       data.addRows([]);
-      
-      for (var i = 0; i <= prediction.length - 1; i++) {
 
+      // add: new Date(2014, 0)
+      // var yearCur = year;
+      // dateCur = new Date(yearCur, month);
+
+      // for (var i = 0; i <= prediction.length - 1; i++) {
+      //   // week = i%52;
+      //   // month = Math.floor(week/4);
+      //   // if (month > 11) {month = 0;};
+      //   if (i%52 == 0) {yearCur++; dateCur = new Date(yearCur, month);}
+      //   if ((i >= realdata.length - 1) && ($('#js-input-type').data('current') == 1)) {
+      //     data.addRows([[dateCur, realdata[i], bestPrediction[i], realdataFore[i]]]);
+      //   }
+      //   else {
+      //     data.addRows([[dateCur, realdata[i], bestPrediction[i], undefined]]);
+      //   }
+        
+      // }
+
+      for (var i = 0; i <= prediction.length - 1; i++) {
+        // week = i%52;
+        // month = Math.floor(week/4);
+        // if (month > 11) {month = 0;};
+        // if (i%52 == 0) {yearCur++}
         if ((i >= realdata.length - 1) && ($('#js-input-type').data('current') == 1)) {
           data.addRows([[i, realdata[i], bestPrediction[i], realdataFore[i]]]);
         }
@@ -321,16 +345,13 @@ function precise_round(num, decimals) {
       }
 
         var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' },
-          series: {
-            4: {
-              annotations: {
-                textStyle: {fontSize: 12, color: 'green' }
-              }
-            }
-          }
+          chart: {
+            // title: 'Box Office Earnings in First Two Weeks of Opening',
+            // subtitle: 'in millions of dollars (USD)'
+          },
+          // width: 700,
+          // height: 300,
+          legend: { position: 'bottom' }
         };
 
         var chart = new google.charts.Line(document.getElementById('curve_chart'));
@@ -600,6 +621,8 @@ $(function() {
   <div class="col-sm-6">
       <input type="submit" tabindex="6" onClick="optimize()" class="form-control mts btn btn-primary btn-block" value="Оптимизация" id="calculate-btn">
   </div>
+
+
 
 </div>
 </div>

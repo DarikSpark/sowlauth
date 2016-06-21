@@ -185,12 +185,171 @@ function precise_round(num, decimals) {
 }
 
 
+      // Interface /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      // Кнопка прибавления
+function pe_increment() {
+
+    var typeSystem = ["Не продлевать", "Продлить"];
+    var myOptions = ["Хольта-Винтерса", "Хольта", "Сглаживание"];
+
+    obj = $(this).parent().prev('input');
+    current = obj.data('current');
+    max = obj.data('max');
+
+
+    current = parseFloat(current);
+    max = parseFloat(max);
+    var curVal = parseFloat(obj.val());
+
+//    Обработчик для поля количество строк
+    if (obj.data('type') == 'kdsi') {
+        if (curVal+0.05 < 1){
+            obj.val(precise_round(curVal+ 0.05, 2));
+        }
+        else{
+            obj.val(0.99);
+            $(this).attr('disabled',true);
+        }
+    }
+
+    if (current+1 < max) {
+//      Проверка: Кнопка принадлежит выбору типа системы или опций системы
+        if (obj.data('type') == 'type-system') {
+            obj.val(typeSystem[current+1].toString());
+        }
+        else {
+            obj.val(myOptions[current+1].toString());
+            optimised = 0;
+        }
+
+        obj.data('current', current+1);
+//        Отдельный else для отключения функционирования кнопки
+    } else if (current+1 == max) {
+        if (obj.data('type') == 'type-system') {
+            obj.val(typeSystem[current+1].toString());
+        }
+        else {
+            obj.val(myOptions[current+1].toString());
+            optimised = 0;
+        }
+        obj.data('current', current+1);
+        $(this).attr('disabled',true);
+    }
+    $(this).prev('button').attr('disabled',false);
+
+    // recalculate_widget();
+    drawChart();   
+}
+
+
+
+
+
+
+
+//  Кнопка убавления
+function pe_decrement() {
+
+    var typeSystem = ["Не продлевать", "Продлить"];
+    var myOptions = ["Хольта-Винтерса", "Хольта", "Сглаживание"];
+
+    obj = $(this).parent().prev('input');
+    current = obj.data('current');
+    max = obj.data('max');
+    min = obj.data('min');
+
+    current = parseFloat(current);
+    max = parseFloat(max);
+    if (min == undefined) {min = 0} else {min = parseFloat(min)}
+
+//    Обработчик для поля количество строк
+    if (obj.data('type') == 'kdsi') {
+        if (obj.val()-0.05 > 0){
+            obj.val(precise_round(obj.val()-0.05, 2));
+        }
+        else{
+            obj.val(0.01);
+            $(this).attr('disabled',true);
+        }
+
+    }
+
+    if (current-1 > min & obj.data('type') != 'kdsi') {
+//      Проверка: Кнопка принадлежит выбору типа системы или опций системы
+        if (obj.data('type') == 'type-system') {
+            obj.val(typeSystem[current-1].toString());
+        }
+        else {
+            obj.val(myOptions[current-1].toString());
+            optimised = 0;
+        }
+
+        obj.data('current', current-1);
+//        Отдельный else для отключения функционирования кнопки
+    } else if (current-1 == min) {
+        if (obj.data('type') == 'type-system') {
+            obj.val(typeSystem[current-1].toString());
+        }
+        else {
+            obj.val(myOptions[current-1].toString());
+            optimised = 0;
+        }
+        obj.data('current', current-1);
+        $(this).attr('disabled',true);
+
+    }
+    $(this).next('button').attr('disabled',false);
+
+    // recalculate_widget();
+    drawChart();    
+}
+
+//  Кнопка убавления
+function optimize() {
+
+    optimised = 0;
+    drawChart();    
+}
+
+
+
+
+
+// // Animated bar chart
+// $(function() {
+//   $("#bars li .bar").each( function( key, bar ) {
+//     var percentage = Math.round(parseFloat($('#js-out-stagework'+key).text()) / parseFloat($('#js-out-stagetime'+key).text()));
+    
+//     $(this).animate({
+//       'height' : percentage + '%'
+//     }, 1000);
+//   });
+// });
+
+
+$(function() {
+
+    $('.js-increment').click(pe_increment);
+    $('.js-decrement').click(pe_decrement);
+
+    $('.js-widget-input').change(function() {
+        // recalculate_widget();
+        drawChart();
+    });
+});
+
+
 // Google Charts ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
       google.charts.load('current', {'packages':['line']});
       google.charts.setOnLoadCallback(drawChart);
-      var optimised = 0;
+      var optimised = 0,
+      realdata = Array(),
+      realdataFore = Array(),
+      count_year = 8,
+      count_week = 0;
 
       function drawChart() {
         <?php 
@@ -198,11 +357,14 @@ function precise_round(num, decimals) {
           for ($i=0; $i < count($lines); $i++) { 
             $lines[$i] = rtrim($lines[$i]);
           }
-          echo 'var realdata = '.json_encode($lines);
+          echo 'var realdataFull = '.json_encode($lines);
         ?>
 
-        for (var i = 0; i <= realdata.length - 1; i++) {
-          realdata[i] = parseInt(realdata[i]);
+        if (count_year*52 <= realdataFull.length) {count_week = count_year*52}
+          else {count_week = realdataFull.length}
+
+        for (var i = 0; i <= count_week - 1; i++) {
+          realdata[i] = parseInt(realdataFull[i]);
         }
 
         <?php 
@@ -210,11 +372,26 @@ function precise_round(num, decimals) {
           for ($i=0; $i < count($lines); $i++) { 
             $lines[$i] = rtrim($lines[$i]);
           }
-          echo 'var realdataFore = '.json_encode($lines);
+          echo 'var realdataForeFull = '.json_encode($lines);
         ?>
 
-        for (var i = 0; i <= realdataFore.length - 1; i++) {
-          realdataFore[i] = parseInt(realdataFore[i]);
+        if ((count_year+1)*52 <= realdataForeFull.length) {count_week = (count_year+1)*52}
+          else{count_week = realdataForeFull.length}
+
+        for (var i = 0; i <= count_week - 1; i++) {
+          realdataFore[i] = parseInt(realdataForeFull[i]);
+        }
+
+        if ($('#js-input-method').data('current') == 0) {
+            $('#title_method').text('Сезонный метод прогнозирования Хольта-Винтерса');
+          }
+
+        if ($('#js-input-method').data('current') == 1) {
+          $('#title_method').text('Метод Хольта');
+        }
+
+        if ($('#js-input-method').data('current') == 2) {
+          $('#title_method').text('Метод экспоненциального сглаживания');
         }
 
         var
@@ -229,7 +406,9 @@ function precise_round(num, decimals) {
         bestAvgErr = 0,
         year = 2007,
         month = 0,
-        week = 0;
+        week = 0,
+        step_optimize = 0.03,
+        start_optimize = 0.01;
 
         var prediction = new Array;
         var bestPrediction = new Array;
@@ -243,7 +422,133 @@ function precise_round(num, decimals) {
         console.log('--> DEFAULT Gamma:', gamma);
         console.log('############################');
 
-        if (optimised == 0){
+        // <? 
+        // $method = $_GET["method"]
+        // echo 'var method = $method' ?>
+
+        if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
+          for (var i = start_optimize; i <= 1; i+=step_optimize) {
+            for (var j = start_optimize; j <= 1; j+=step_optimize) {
+              for (var k = start_optimize; k <= 1; k+=step_optimize) {
+                prediction = forecast(realdata, i, j, k, period, m);
+                avgErrVar = avgErr(realdata, prediction);
+                if (avgErrVar < bestAvgErrVar) {
+                  bestAvgErrVar = avgErrVar;
+                  bestAlpha = i;
+                  bestBeta = j;
+                  bestGamma = k;
+                  bestPrediction = prediction;
+                  // console.log('--> best avg abs err:', bestAvgErrVar);
+                  // console.log('--> bestAlpha:', bestAlpha);
+                  // console.log('--> bestBeta:', bestBeta);
+                  // console.log('--> bestGamma:', bestGamma);
+                  // console.log('############################');
+                }
+              }
+            }
+          }       
+
+
+
+          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
+          $('#js-input-beta').val(precise_round(bestBeta, 2));
+          $('#js-input-gamma').val(precise_round(bestGamma, 2));
+          // $('#js-out-alpha').val(bestAlpha);
+          // $('#js-out-beta').val(bestBeta);
+          // $('#js-out-gamma').val(bestGamma);
+          // $('#js-out-avgErr').val(bestAvgErrVar);
+
+          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
+          $('#js-out-beta').text(precise_round(bestBeta, 2));
+          $('#js-out-gamma').text(precise_round(bestGamma, 2));
+          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
+          optimised = 1;
+        }
+
+
+        if ((optimised == 0) && ($('#js-input-method').data('current') == 1)){
+          var k = 0;
+          for (var i = start_optimize; i <= 1; i+=step_optimize) {
+            for (var j = start_optimize; j <= 1; j+=step_optimize) {
+              // for (var k = start_optimize; k <= 1; k+=step_optimize) {
+                prediction = forecast(realdata, i, j, k, period, m);
+                avgErrVar = avgErr(realdata, prediction);
+                if (avgErrVar < bestAvgErrVar) {
+                  bestAvgErrVar = avgErrVar;
+                  bestAlpha = i;
+                  bestBeta = j;
+                  bestGamma = k;
+                  bestPrediction = prediction;
+                  // console.log('--> best avg abs err:', bestAvgErrVar);
+                  // console.log('--> bestAlpha:', bestAlpha);
+                  // console.log('--> bestBeta:', bestBeta);
+                  // console.log('--> bestGamma:', bestGamma);
+                  // console.log('############################');
+                }
+              // }
+            }
+          }       
+
+
+
+          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
+          $('#js-input-beta').val(precise_round(bestBeta, 2));
+          $('#js-input-gamma').val(precise_round(bestGamma, 2));
+          // $('#js-out-alpha').val(bestAlpha);
+          // $('#js-out-beta').val(bestBeta);
+          // $('#js-out-gamma').val(bestGamma);
+          // $('#js-out-avgErr').val(bestAvgErrVar);
+
+          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
+          $('#js-out-beta').text(precise_round(bestBeta, 2));
+          $('#js-out-gamma').text(precise_round(bestGamma, 2));
+          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
+          optimised = 1;
+        }
+
+        if ((optimised == 0) && ($('#js-input-method').data('current') == 2)){
+          var k = 0;
+          var j= 0;
+          for (var i = start_optimize; i <= 1; i+=step_optimize) {
+            // for (var j = start_optimize; j <= 1; j+=step_optimize) {
+            //   for (var k = start_optimize; k <= 1; k+=step_optimize) {
+                prediction = forecast(realdata, i, j, k, period, m);
+                avgErrVar = avgErr(realdata, prediction);
+                if (avgErrVar < bestAvgErrVar) {
+                  bestAvgErrVar = avgErrVar;
+                  bestAlpha = i;
+                  bestBeta = j;
+                  bestGamma = k;
+                  bestPrediction = prediction;
+                  // console.log('--> best avg abs err:', bestAvgErrVar);
+                  // console.log('--> bestAlpha:', bestAlpha);
+                  // console.log('--> bestBeta:', bestBeta);
+                  // console.log('--> bestGamma:', bestGamma);
+                  // console.log('############################');
+                }
+              // }
+            // }
+          }       
+
+
+
+          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
+          $('#js-input-beta').val(precise_round(bestBeta, 2));
+          $('#js-input-gamma').val(precise_round(bestGamma, 2));
+          // $('#js-out-alpha').val(bestAlpha);
+          // $('#js-out-beta').val(bestBeta);
+          // $('#js-out-gamma').val(bestGamma);
+          // $('#js-out-avgErr').val(bestAvgErrVar);
+
+          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
+          $('#js-out-beta').text(precise_round(bestBeta, 2));
+          $('#js-out-gamma').text(precise_round(bestGamma, 2));
+          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
+          optimised = 1;
+        }
+
+
+        if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
           for (var i = 0.01; i <= 1; i+=0.03) {
             for (var j = 0.01; j <= 1; j+=0.03) {
               for (var k = 0.01; k <= 1; k+=0.03) {
@@ -263,7 +568,10 @@ function precise_round(num, decimals) {
                 }
               }
             }
-          }
+          }       
+
+
+
           $('#js-input-alpha').val(precise_round(bestAlpha, 2));
           $('#js-input-beta').val(precise_round(bestBeta, 2));
           $('#js-input-gamma').val(precise_round(bestGamma, 2));
@@ -278,6 +586,8 @@ function precise_round(num, decimals) {
           $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
           optimised = 1;
         }
+
+
 
         console.log('--> best avg abs err:', bestAvgErrVar);
         console.log('--> bestAlpha:', bestAlpha);
@@ -305,7 +615,7 @@ function precise_round(num, decimals) {
       var data = new google.visualization.DataTable();
       data.addColumn('number', 'Неделя');
       data.addColumn('number', 'Реальный ряд');
-      data.addColumn('number', 'Хольтер-Винтерс');
+      data.addColumn('number', $('#js-input-method').val());
       data.addColumn('number', 'Продолжение реального ряда');
 
       data.addRows([]);
@@ -355,163 +665,27 @@ function precise_round(num, decimals) {
         var chart = new google.charts.Line(document.getElementById('curve_chart'));
 
         chart.draw(data, options);
+
         
+      
       }
 
+        // <?php
 
-      // Interface /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          
 
-      // Кнопка прибавления
-function pe_increment() {
+          // if ($('#js-input-method').data('current') == 1) {
+          //   $title_method =  '<h3 align="center">Метод прогнозирования Хольта</h3>';
+          // }
 
-    var typeSystem = ["Не продлевать", "Продлить"];
-    var myOptions = ["Очень низкий", "Низкий", "Номинальный", "Высокий", "Очень высокий"];
-
-    obj = $(this).parent().prev('input');
-    current = obj.data('current');
-    max = obj.data('max');
-
-
-    current = parseFloat(current);
-    max = parseFloat(max);
-    var curVal = parseFloat(obj.val());
-
-//    Обработчик для поля количество строк
-    if (obj.data('type') == 'kdsi') {
-        if (curVal+0.05 < 1){
-            obj.val(precise_round(curVal+ 0.05, 2));
-        }
-        else{
-            obj.val(0.99);
-            $(this).attr('disabled',true);
-        }
-    }
-
-    if (current+1 < max) {
-//      Проверка: Кнопка принадлежит выбору типа системы или опций системы
-        if (obj.data('type') == 'type-system') {
-            obj.val(typeSystem[current+1].toString());
-        }
-        else {
-            obj.val(myOptions[current+1].toString())
-        }
-
-        obj.data('current', current+1);
-//        Отдельный else для отключения функционирования кнопки
-    } else if (current+1 == max) {
-        if (obj.data('type') == 'type-system') {
-            obj.val(typeSystem[current+1].toString());
-        }
-        else {
-            obj.val(myOptions[current+1].toString())
-        }
-        obj.data('current', current+1);
-        $(this).attr('disabled',true);
-    }
-    $(this).prev('button').attr('disabled',false);
-
-    // recalculate_widget();
-    drawChart();   
-}
-
-
-
-
-
-
-
-//  Кнопка убавления
-function pe_decrement() {
-
-    var typeSystem = ["Не продлевать", "Продлить"];
-    var myOptions = ["Очень низкий", "Низкий", "Номинальный", "Высокий", "Очень высокий"];
-
-    obj = $(this).parent().prev('input');
-    current = obj.data('current');
-    max = obj.data('max');
-    min = obj.data('min');
-
-    current = parseFloat(current);
-    max = parseFloat(max);
-    if (min == undefined) {min = 0} else {min = parseFloat(min)}
-
-//    Обработчик для поля количество строк
-    if (obj.data('type') == 'kdsi') {
-        if (obj.val()-0.05 > 0){
-            obj.val(precise_round(obj.val()-0.05, 2));
-        }
-        else{
-            obj.val(0.01);
-            $(this).attr('disabled',true);
-        }
-
-    }
-
-    if (current-1 > min & obj.data('type') != 'kdsi') {
-//      Проверка: Кнопка принадлежит выбору типа системы или опций системы
-        if (obj.data('type') == 'type-system') {
-            obj.val(typeSystem[current-1].toString());
-        }
-        else {
-            obj.val(myOptions[current-1].toString())
-        }
-
-        obj.data('current', current-1);
-//        Отдельный else для отключения функционирования кнопки
-    } else if (current-1 == min) {
-        if (obj.data('type') == 'type-system') {
-            obj.val(typeSystem[current-1].toString());
-        }
-        else {
-            obj.val(myOptions[current-1].toString())
-        }
-        obj.data('current', current-1);
-        $(this).attr('disabled',true);
-
-    }
-    $(this).next('button').attr('disabled',false);
-
-    // recalculate_widget();
-    drawChart();    
-}
-
-//  Кнопка убавления
-function optimize() {
-
-    optimised = 0;
-    drawChart();    
-}
-
-
-
-
-
-// // Animated bar chart
-// $(function() {
-//   $("#bars li .bar").each( function( key, bar ) {
-//     var percentage = Math.round(parseFloat($('#js-out-stagework'+key).text()) / parseFloat($('#js-out-stagetime'+key).text()));
-    
-//     $(this).animate({
-//       'height' : percentage + '%'
-//     }, 1000);
-//   });
-// });
-
-
-$(function() {
-
-    $('.js-increment').click(pe_increment);
-    $('.js-decrement').click(pe_decrement);
-
-    $('.js-widget-input').change(function() {
-        // recalculate_widget();
-        drawChart();
-    });
-});
+          // if ($('#js-input-method').data('current') == 2) {
+          //   $title_method =  '<h3 align="center">Метод экспоненциального сглаживания</h3>';
+          // }
+         // ?>
 
 
     </script>
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
 
 
 <div class="container">
@@ -522,7 +696,8 @@ $(function() {
 
 
     <main>
-        <h3 align="center">Сезонный метод прогнозирования Хольта-Винтерса</h3>
+<h3 id="title_method" align="center" title="1"></h3>
+
            <div id="curve_chart" style="width: 700px; height: 300px"></div>
 
 
@@ -537,10 +712,10 @@ $(function() {
                 <th>Среднеквадратичное отклонение</th>
             </tr>
             <tr>
-                <td><var id="js-out-alpha">0.97</var></td>
-                <td><var id="js-out-beta">0.97</var></td>
-                <td><var id="js-out-gamma">0.13</var></td>
-                <td><var id="js-out-avgErr">5000</var></td>
+                <td><var id="js-out-alpha">0</var></td>
+                <td><var id="js-out-beta">0</var></td>
+                <td><var id="js-out-gamma">0</var></td>
+                <td><var id="js-out-avgErr">0</var></td>
             </tr>
         </table>
     </main>
@@ -596,7 +771,7 @@ $(function() {
     </div>
   </div>
 
-  <div class="form-group col-sm-6">
+  <div class="form-group col-sm-4">
       <label for="js-input-type" class="control-label small text-muted">Продлить реальный ряд:</label>
 
       <div class="input-group prefix suffix">
@@ -615,7 +790,26 @@ $(function() {
       </div>
   </div>
 
-  <div class="col-sm-6">
+  <div class="form-group col-sm-4">
+      <label for="js-input-method" class="control-label small text-muted">Выбор метода:</label>
+
+      <div class="input-group prefix suffix">
+          <!--                            <span class="prefix">$</span>-->
+          <!--                            <span class="suffix">M</span>-->
+          <input type="text" tabindex="1" id="js-input-method" name="js-input-method"
+                 class="form-control mrs mbs js-widget-input"
+                 data-current="0" data-max="2" data-type="method" pattern="\d*" data-target="#js-in-kdsi"
+                 value="Хольта-Винтерса"
+                 disabled style="cursor: default; background: #ffffff;">
+
+          <div class="input-group-btn">
+              <button type="button" class="btn btn-default js-decrement" tabindex="-1" disabled>–</button>
+              <button type="button" class="btn btn-default js-increment" tabindex="-1">+</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-sm-4">
       <input type="submit" tabindex="6" onClick="optimize()" class="form-control mts btn btn-primary btn-block" value="Оптимизация" id="calculate-btn">
   </div>
 

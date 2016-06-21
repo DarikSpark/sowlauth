@@ -27,4 +27,9 @@ class HomeController extends AdminController
     {
         return $this->renderContent(view('dashboard'));
     }
+
+    public function prognosis()
+    {
+        return $this->renderContent(view('prognosis'));
+    }
 }
