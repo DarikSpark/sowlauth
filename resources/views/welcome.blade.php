@@ -2,7 +2,7 @@
 
 @section('content')
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
@@ -27,7 +27,7 @@
 
     chart.draw(data, options);
   }
-</script>
+</script> -->
 
 
 
@@ -35,16 +35,16 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Welcome</div>
+                <div class="panel-heading">Добро пожаловать</div>
 
                 <div class="panel-body">
-                   <!--  Your Application's Landing Page.
+                    Стартовая страница приложения
                     <hr>
-                    Login: admin@site.com
+                    Логин: admin@site.com
                     <br>
-                    Password: password
-                    <br> -->     
-                    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+                    Пароль: password
+                    <br>     
+                    <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
                 </div>
             </div>
         </div>
