@@ -521,9 +521,17 @@ $(function() {
           // $('#js-out-gamma').val(bestGamma);
           // $('#js-out-avgErr').val(bestAvgErrVar);
 
-          $('#js-out-alpha').text('Belvedere');
-          $('#js-out-beta').text('17/07/2016');
-          $('#js-out-gamma').text(27537);
+          $('#js-out-alpha1').text('Belvedere');
+          $('#js-out-beta1').text('14/07/2016');
+          $('#js-out-gamma1').text(45757);
+
+          $('#js-out-alpha2').text('Westerland');
+          $('#js-out-beta2').text('14/07/2016');
+          $('#js-out-gamma2').text(68957);
+
+          $('#js-out-alpha3').text('Elfe');
+          $('#js-out-beta3').text('14/07/2016');
+          $('#js-out-gamma3').text(283);
           $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
           optimised = 1;
         }
@@ -611,44 +619,52 @@ $(function() {
         }
 
 
-        // if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
-        //   for (var i = 0.01; i <= 1; i+=0.03) {
-        //     for (var j = 0.01; j <= 1; j+=0.03) {
-        //       for (var k = 0.01; k <= 1; k+=0.03) {
-        //         prediction = forecast(realdata, i, j, k, period, m);
-        //         avgErrVar = avgErr(realdata, prediction);
-        //         if (avgErrVar < bestAvgErrVar) {
-        //           bestAvgErrVar = avgErrVar;
-        //           bestAlpha = i;
-        //           bestBeta = j;
-        //           bestGamma = k;
-        //           bestPrediction = prediction;
-        //           // console.log('--> best avg abs err:', bestAvgErrVar);
-        //           // console.log('--> bestAlpha:', bestAlpha);
-        //           // console.log('--> bestBeta:', bestBeta);
-        //           // console.log('--> bestGamma:', bestGamma);
-        //           // console.log('############################');
-        //         }
-        //       }
-        //     }
-        //   }       
+        if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
+          for (var i = 0.01; i <= 1; i+=0.03) {
+            for (var j = 0.01; j <= 1; j+=0.03) {
+              for (var k = 0.01; k <= 1; k+=0.03) {
+                prediction = forecast(realdata, i, j, k, period, m);
+                avgErrVar = avgErr(realdata, prediction);
+                if (avgErrVar < bestAvgErrVar) {
+                  bestAvgErrVar = avgErrVar;
+                  bestAlpha = i;
+                  bestBeta = j;
+                  bestGamma = k;
+                  bestPrediction = prediction;
+                  // console.log('--> best avg abs err:', bestAvgErrVar);
+                  // console.log('--> bestAlpha:', bestAlpha);
+                  // console.log('--> bestBeta:', bestBeta);
+                  // console.log('--> bestGamma:', bestGamma);
+                  // console.log('############################');
+                }
+              }
+            }
+          }       
 
 
 
-        //   $('#js-input-alpha').val(precise_round(bestAlpha, 2));
-        //   $('#js-input-beta').val(precise_round(bestBeta, 2));
-        //   $('#js-input-gamma').val(precise_round(bestGamma, 2));
-        //   // $('#js-out-alpha').val(bestAlpha);
-        //   // $('#js-out-beta').val(bestBeta);
-        //   // $('#js-out-gamma').val(bestGamma);
-        //   // $('#js-out-avgErr').val(bestAvgErrVar);
+          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
+          $('#js-input-beta').val(precise_round(bestBeta, 2));
+          $('#js-input-gamma').val(precise_round(bestGamma, 2));
+          // $('#js-out-alpha').val(bestAlpha);
+          // $('#js-out-beta').val(bestBeta);
+          // $('#js-out-gamma').val(bestGamma);
+          // $('#js-out-avgErr').val(bestAvgErrVar);
 
-        //   $('#js-out-alpha').text(precise_round(bestAlpha, 2));
-        //   $('#js-out-beta').text(precise_round(bestBeta, 2));
-        //   $('#js-out-gamma').text(precise_round(bestGamma, 2));
-        //   $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
-        //   optimised = 1;
-        // }
+          $('#js-out-alpha1').text('Belvedere');
+          $('#js-out-beta1').text('14/07/2016');
+          $('#js-out-gamma1').text(45757);
+
+          $('#js-out-alpha2').text('Westerland');
+          $('#js-out-beta2').text('14/07/2016');
+          $('#js-out-gamma2').text(68957);
+
+          $('#js-out-alpha3').text('Elfe');
+          $('#js-out-beta3').text('14/07/2016');
+          $('#js-out-gamma3').text(283);
+          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
+          optimised = 1;
+        }
 
 
 
@@ -775,21 +791,21 @@ $(function() {
                 <!-- <th>Среднеквадратичное отклонение</th> -->
             </tr>
             <tr>
-                <td><var id="js-out-alpha1">Belvedere</var></td>
-                <td><var id="js-out-beta1">14/07/2016</var></td>
-                <td><var id="js-out-gamma1">47283</var></td>
+                <td><var id="js-out-alpha1"></var></td>
+                <td><var id="js-out-beta1"></var></td>
+                <td><var id="js-out-gamma1"></var></td>
                 <!-- <td><var id="js-out-avgErr">0</var></td> -->
             </tr>
             <tr>
-                <td><var id="js-out-alpha1">Westerland</var></td>
-                <td><var id="js-out-beta1">14/07/2016</var></td>
-                <td><var id="js-out-gamma1">28578</var></td>
+                <td><var id="js-out-alpha2"></var></td>
+                <td><var id="js-out-beta2"></var></td>
+                <td><var id="js-out-gamma2"></var></td>
                 <!-- <td><var id="js-out-avgErr">0</var></td> -->
             </tr>
             <tr>
-                <td><var id="js-out-alpha1">Elfe</var></td>
-                <td><var id="js-out-beta1">14/07/2016</var></td>
-                <td><var id="js-out-gamma1">263</var></td>
+                <td><var id="js-out-alpha3"></var></td>
+                <td><var id="js-out-beta3"></var></td>
+                <td><var id="js-out-gamma3"></var></td>
                 <!-- <td><var id="js-out-avgErr">0</var></td> -->
             </tr>
         </table>
