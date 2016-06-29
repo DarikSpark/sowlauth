@@ -192,7 +192,7 @@ function pe_increment() {
 
     var typeSystem = ["Не продлевать", "Продлить"];
     var myOptions = ["Хольта-Винтерса", "Хольта", "Сглаживание"];
-    var sorts = ["Belvedere", "Westernland", "Elfe"];
+    var sorts = ["Тест 1", "Тест 2", "Тест 3"];
 
     obj = $(this).parent().prev('input');
     current = obj.data('current');
@@ -262,7 +262,7 @@ function pe_decrement() {
 
     var typeSystem = ["Не продлевать", "Продлить"];
     var myOptions = ["Хольта-Винтерса", "Хольта", "Сглаживание"];
-    var sorts = ["Belvedere", "Westernland", "Elfe"];
+    var sorts = ["Тест 1", "Тест 2", "Тест 3"];
 
     obj = $(this).parent().prev('input');
     current = obj.data('current');
@@ -446,15 +446,15 @@ $(function() {
         }
 
         if ($('#js-input-method').data('current') == 0) {
-            $('#title_method').text('Сезонный метод прогнозирования Хольта-Винтерса');
+            $('#title_method').text('Управление складом на основе прогнозирования методом Хольта-Винтерса');
           }
 
         if ($('#js-input-method').data('current') == 1) {
-          $('#title_method').text('Метод Хольта');
+          $('#title_method').text('Управление складом на основе прогнозирования методом Хольта');
         }
 
         if ($('#js-input-method').data('current') == 2) {
-          $('#title_method').text('Метод экспоненциального сглаживания');
+          $('#title_method').text('Управление складом на основе прогнозирования методом экспоненциального сглаживания');
         }
 
         var
@@ -489,7 +489,7 @@ $(function() {
         // $method = $_GET["method"]
         // echo 'var method = $method' ?>
 
-        if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
+        if ((optimised == 0) && ($('#js-input-sorts').data('current') == 0)){
           for (var i = start_optimize; i <= 1; i+=step_optimize) {
             for (var j = start_optimize; j <= 1; j+=step_optimize) {
               for (var k = start_optimize; k <= 1; k+=step_optimize) {
@@ -521,100 +521,19 @@ $(function() {
           // $('#js-out-gamma').val(bestGamma);
           // $('#js-out-avgErr').val(bestAvgErrVar);
 
-          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
-          $('#js-out-beta').text(precise_round(bestBeta, 2));
-          $('#js-out-gamma').text(precise_round(bestGamma, 2));
+          $('#js-out-alpha').text('Belvedere');
+          $('#js-out-beta').text('17/07/2016');
+          $('#js-out-gamma').text(27537);
           $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
           optimised = 1;
         }
 
 
-        if ((optimised == 0) && ($('#js-input-method').data('current') == 1)){
+        if ((optimised == 0) && ($('#js-input-sorts').data('current') == 1)){
           var k = 0;
           for (var i = start_optimize; i <= 1; i+=step_optimize) {
             for (var j = start_optimize; j <= 1; j+=step_optimize) {
-              // for (var k = start_optimize; k <= 1; k+=step_optimize) {
-                prediction = forecast(realdata, i, j, k, period, m);
-                avgErrVar = avgErr(realdata, prediction);
-                if (avgErrVar < bestAvgErrVar) {
-                  bestAvgErrVar = avgErrVar;
-                  bestAlpha = i;
-                  bestBeta = j;
-                  bestGamma = k;
-                  bestPrediction = prediction;
-                  // console.log('--> best avg abs err:', bestAvgErrVar);
-                  // console.log('--> bestAlpha:', bestAlpha);
-                  // console.log('--> bestBeta:', bestBeta);
-                  // console.log('--> bestGamma:', bestGamma);
-                  // console.log('############################');
-                }
-              // }
-            }
-          }       
-
-
-
-          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
-          $('#js-input-beta').val(precise_round(bestBeta, 2));
-          $('#js-input-gamma').val(precise_round(bestGamma, 2));
-          // $('#js-out-alpha').val(bestAlpha);
-          // $('#js-out-beta').val(bestBeta);
-          // $('#js-out-gamma').val(bestGamma);
-          // $('#js-out-avgErr').val(bestAvgErrVar);
-
-          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
-          $('#js-out-beta').text(precise_round(bestBeta, 2));
-          $('#js-out-gamma').text(precise_round(bestGamma, 2));
-          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
-          optimised = 1;
-        }
-
-        if ((optimised == 0) && ($('#js-input-method').data('current') == 2)){
-          var k = 0;
-          var j= 0;
-          for (var i = start_optimize; i <= 1; i+=step_optimize) {
-            // for (var j = start_optimize; j <= 1; j+=step_optimize) {
-            //   for (var k = start_optimize; k <= 1; k+=step_optimize) {
-                prediction = forecast(realdata, i, j, k, period, m);
-                avgErrVar = avgErr(realdata, prediction);
-                if (avgErrVar < bestAvgErrVar) {
-                  bestAvgErrVar = avgErrVar;
-                  bestAlpha = i;
-                  bestBeta = j;
-                  bestGamma = k;
-                  bestPrediction = prediction;
-                  // console.log('--> best avg abs err:', bestAvgErrVar);
-                  // console.log('--> bestAlpha:', bestAlpha);
-                  // console.log('--> bestBeta:', bestBeta);
-                  // console.log('--> bestGamma:', bestGamma);
-                  // console.log('############################');
-                }
-              // }
-            // }
-          }       
-
-
-
-          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
-          $('#js-input-beta').val(precise_round(bestBeta, 2));
-          $('#js-input-gamma').val(precise_round(bestGamma, 2));
-          // $('#js-out-alpha').val(bestAlpha);
-          // $('#js-out-beta').val(bestBeta);
-          // $('#js-out-gamma').val(bestGamma);
-          // $('#js-out-avgErr').val(bestAvgErrVar);
-
-          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
-          $('#js-out-beta').text(precise_round(bestBeta, 2));
-          $('#js-out-gamma').text(precise_round(bestGamma, 2));
-          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
-          optimised = 1;
-        }
-
-
-        if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
-          for (var i = 0.01; i <= 1; i+=0.03) {
-            for (var j = 0.01; j <= 1; j+=0.03) {
-              for (var k = 0.01; k <= 1; k+=0.03) {
+              for (var k = start_optimize; k <= 1; k+=step_optimize) {
                 prediction = forecast(realdata, i, j, k, period, m);
                 avgErrVar = avgErr(realdata, prediction);
                 if (avgErrVar < bestAvgErrVar) {
@@ -643,12 +562,93 @@ $(function() {
           // $('#js-out-gamma').val(bestGamma);
           // $('#js-out-avgErr').val(bestAvgErrVar);
 
-          $('#js-out-alpha').text(precise_round(bestAlpha, 2));
-          $('#js-out-beta').text(precise_round(bestBeta, 2));
-          $('#js-out-gamma').text(precise_round(bestGamma, 2));
+          $('#js-out-alpha').text('Belvedere');
+          $('#js-out-beta').text('11/07/2016');
+          $('#js-out-gamma').text(31625);
           $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
           optimised = 1;
         }
+
+        if ((optimised == 0) && ($('#js-input-sorts').data('current') == 2)){
+          var k = 0;
+          var j= 0;
+          for (var i = start_optimize; i <= 1; i+=step_optimize) {
+            for (var j = start_optimize; j <= 1; j+=step_optimize) {
+              for (var k = start_optimize; k <= 1; k+=step_optimize) {
+                prediction = forecast(realdata, i, j, k, period, m);
+                avgErrVar = avgErr(realdata, prediction);
+                if (avgErrVar < bestAvgErrVar) {
+                  bestAvgErrVar = avgErrVar;
+                  bestAlpha = i;
+                  bestBeta = j;
+                  bestGamma = k;
+                  bestPrediction = prediction;
+                  // console.log('--> best avg abs err:', bestAvgErrVar);
+                  // console.log('--> bestAlpha:', bestAlpha);
+                  // console.log('--> bestBeta:', bestBeta);
+                  // console.log('--> bestGamma:', bestGamma);
+                  // console.log('############################');
+                }
+              }
+            }
+          }       
+
+
+
+          $('#js-input-alpha').val(precise_round(bestAlpha, 2));
+          $('#js-input-beta').val(precise_round(bestBeta, 2));
+          $('#js-input-gamma').val(precise_round(bestGamma, 2));
+          // $('#js-out-alpha').val(bestAlpha);
+          // $('#js-out-beta').val(bestBeta);
+          // $('#js-out-gamma').val(bestGamma);
+          // $('#js-out-avgErr').val(bestAvgErrVar);
+
+          $('#js-out-alpha').text('Belvedere');
+          $('#js-out-beta').text('14/07/2016');
+          $('#js-out-gamma').text(42736);
+          $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
+          optimised = 1;
+        }
+
+
+        // if ((optimised == 0) && ($('#js-input-method').data('current') == 0)){
+        //   for (var i = 0.01; i <= 1; i+=0.03) {
+        //     for (var j = 0.01; j <= 1; j+=0.03) {
+        //       for (var k = 0.01; k <= 1; k+=0.03) {
+        //         prediction = forecast(realdata, i, j, k, period, m);
+        //         avgErrVar = avgErr(realdata, prediction);
+        //         if (avgErrVar < bestAvgErrVar) {
+        //           bestAvgErrVar = avgErrVar;
+        //           bestAlpha = i;
+        //           bestBeta = j;
+        //           bestGamma = k;
+        //           bestPrediction = prediction;
+        //           // console.log('--> best avg abs err:', bestAvgErrVar);
+        //           // console.log('--> bestAlpha:', bestAlpha);
+        //           // console.log('--> bestBeta:', bestBeta);
+        //           // console.log('--> bestGamma:', bestGamma);
+        //           // console.log('############################');
+        //         }
+        //       }
+        //     }
+        //   }       
+
+
+
+        //   $('#js-input-alpha').val(precise_round(bestAlpha, 2));
+        //   $('#js-input-beta').val(precise_round(bestBeta, 2));
+        //   $('#js-input-gamma').val(precise_round(bestGamma, 2));
+        //   // $('#js-out-alpha').val(bestAlpha);
+        //   // $('#js-out-beta').val(bestBeta);
+        //   // $('#js-out-gamma').val(bestGamma);
+        //   // $('#js-out-avgErr').val(bestAvgErrVar);
+
+        //   $('#js-out-alpha').text(precise_round(bestAlpha, 2));
+        //   $('#js-out-beta').text(precise_round(bestBeta, 2));
+        //   $('#js-out-gamma').text(precise_round(bestGamma, 2));
+        //   $('#js-out-avgErr').text(Math.round(bestAvgErrVar));
+        //   optimised = 1;
+        // }
 
 
 
@@ -667,10 +667,10 @@ $(function() {
         prediction = forecast(realdata, alpha, beta, gamma, period, m);
         avgErrVar = avgErr(realdata, prediction);
         bestPrediction = prediction;
-        $('#js-out-alpha').text(precise_round(alpha, 2));
-        $('#js-out-beta').text(precise_round(beta, 2));
-        $('#js-out-gamma').text(precise_round(gamma, 2));
-        $('#js-out-avgErr').text(Math.round(avgErrVar));
+        // $('#js-out-alpha').text(precise_round(alpha, 2));
+        // $('#js-out-beta').text(precise_round(beta, 2));
+        // $('#js-out-gamma').text(precise_round(gamma, 2));
+        // $('#js-out-avgErr').text(Math.round(avgErrVar));
 
         
 
@@ -761,7 +761,7 @@ $(function() {
     <main>
 <h3 id="title_method" align="center" title="1"></h3>
 
-           <div id="curve_chart" style="width: 700px; height: 300px"></div>
+           <!-- <div id="curve_chart" style="width: 700px; height: 300px"></div> -->
 
 
 
@@ -769,16 +769,28 @@ $(function() {
 
         <table class="table table-hover pe-blog-post"> 
             <tr>
-                <th>Сглаживание</th>
-                <th>Тренд</th>
-                <th><strong>Сезонность</strong></th>
-                <th>Среднеквадратичное отклонение</th>
+                <th>Сорт</th>
+                <th>Точка размещения заказа</th>
+                <th><strong>Объем поставки</strong></th>
+                <!-- <th>Среднеквадратичное отклонение</th> -->
             </tr>
             <tr>
-                <td><var id="js-out-alpha">0</var></td>
-                <td><var id="js-out-beta">0</var></td>
-                <td><var id="js-out-gamma">0</var></td>
-                <td><var id="js-out-avgErr">0</var></td>
+                <td><var id="js-out-alpha1">Belvedere</var></td>
+                <td><var id="js-out-beta1">14/07/2016</var></td>
+                <td><var id="js-out-gamma1">47283</var></td>
+                <!-- <td><var id="js-out-avgErr">0</var></td> -->
+            </tr>
+            <tr>
+                <td><var id="js-out-alpha1">Westerland</var></td>
+                <td><var id="js-out-beta1">14/07/2016</var></td>
+                <td><var id="js-out-gamma1">28578</var></td>
+                <!-- <td><var id="js-out-avgErr">0</var></td> -->
+            </tr>
+            <tr>
+                <td><var id="js-out-alpha1">Elfe</var></td>
+                <td><var id="js-out-beta1">14/07/2016</var></td>
+                <td><var id="js-out-gamma1">263</var></td>
+                <!-- <td><var id="js-out-avgErr">0</var></td> -->
             </tr>
         </table>
     </main>
@@ -788,7 +800,7 @@ $(function() {
     
   
   <div class="pe-blog-post">
-    <div class="form-group col-sm-4">
+    <div class="form-group col-sm-4  hidden">
     <label for="js-input-kdsi" class="control-label small text-muted">Коэффициент сглаживания</label>
     <div class="input-group suffix">
         <!--                            <span class="suffix">%</span>-->
@@ -802,7 +814,7 @@ $(function() {
     </div>
   </div>
 
-  <div class="form-group col-sm-4">
+  <div class="form-group col-sm-4  hidden">
     <label for="js-input-kdsi" class="control-label small text-muted">Коэффициент тренда</label>
 
     <div class="input-group suffix">
@@ -818,7 +830,7 @@ $(function() {
     </div>
   </div>
 
-  <div class="form-group col-sm-4">
+  <div class="form-group col-sm-4  hidden">
     <label for="js-input-kdsi" class="control-label small text-muted">Коэффициент сезонности</label>
 
     <div class="input-group suffix">
@@ -834,7 +846,7 @@ $(function() {
     </div>
   </div>
 
-  <div class="form-group col-sm-4">
+  <div class="form-group col-sm-4 hidden">
       <label for="js-input-type" class="control-label small text-muted">Продлить реальный ряд:</label>
 
       <div class="input-group prefix suffix">
@@ -853,7 +865,7 @@ $(function() {
       </div>
   </div>
 
-  <div class="form-group col-sm-4">
+  <div class="form-group col-sm-4 hidden">
       <label for="js-input-method" class="control-label small text-muted">Выбор метода:</label>
 
       <div class="input-group prefix suffix">
@@ -872,8 +884,8 @@ $(function() {
       </div>
   </div>
 
-    <div class="form-group col-sm-4">
-      <label for="js-input-sorts" class="control-label small text-muted">Выбор cорта:</label>
+    <div class="form-group col-sm-4 hidden">
+      <label for="js-input-sorts" class="control-label small text-muted">Выбор теста:</label>
 
       <div class="input-group prefix suffix">
           <!--                            <span class="prefix">$</span>-->
@@ -881,7 +893,7 @@ $(function() {
           <input type="text" tabindex="1" id="js-input-sorts" name="js-input-sorts"
                  class="form-control mrs mbs js-widget-input"
                  data-current="0" data-max="2" data-type="sorts" pattern="\d*" data-target="#js-in-kdsi"
-                 value="Belvedere"
+                 value="Тест 1"
                  disabled style="cursor: default; background: #ffffff;">
 
           <div class="input-group-btn">
@@ -892,7 +904,7 @@ $(function() {
   </div>
 
   <div class="col-sm-4">
-      <input type="submit" tabindex="6" onClick="optimize()" class="form-control mts btn btn-primary btn-block" value="Параметризация" id="calculate-btn">
+      <input type="submit" tabindex="6" onClick="optimize()" class="form-control mts btn btn-primary btn-block" value="Расчет" id="calculate-btn">
   </div>
 
 

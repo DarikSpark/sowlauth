@@ -4,6 +4,8 @@ Route::get('', ['as' => 'admin.dashboard', 'uses' => '\App\Http\Controllers\Home
 
 Route::get('/prognosis', ['as' => 'admin.dashboard', 'uses' => '\App\Http\Controllers\HomeController@prognosis']);
 
+Route::get('/stock', ['as' => 'admin.dashboard', 'uses' => '\App\Http\Controllers\HomeController@stock']);
+
 Route::get('/information', ['as' => 'admin.information', function () {
 	$content = 'Define your information here.';
 	return AdminSection::view($content, 'Information');

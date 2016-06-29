@@ -32,4 +32,9 @@ class HomeController extends AdminController
     {
         return $this->renderContent(view('prognosis'));
     }
+
+    public function stock()
+    {
+        return $this->renderContent(view('stock'));
+    }
 }

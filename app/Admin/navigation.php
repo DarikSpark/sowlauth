@@ -4,6 +4,8 @@ use SleepingOwl\Admin\Navigation\Page;
 
 app('sleeping_owl.navigation')->addPage()->setTitle('Прогнозирование')->setUrl('admin/prognosis')->setIcon('fa fa-fax');
 
+app('sleeping_owl.navigation')->addPage()->setTitle('Регулирование склада')->setUrl('admin/stock')->setIcon('fa fa-fax');
+
 // return [
 // [
 //         'title' => "Демо",
